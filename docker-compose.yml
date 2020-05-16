@@ -1,0 +1,7 @@
+version: '3'
+services:
+
+  elixir:
+    image: elixir
+    volumes:
+      - ./:/issues
