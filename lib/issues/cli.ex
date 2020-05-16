@@ -9,19 +9,23 @@ defmodule Issues.CLI do
   end
 
   def parse_arg(argv) do
-    parse = OptionParser.parse(
+    OptionParser.parse(
       argv,
       switches: [:help, :boolean],
-      aliases: [:h, :help]
-    )
+      aliases: [:h, :help])
+    |> elem(1)
+    |> args_to_internal_representation()
+  end
 
-    IO.inspect parse
+  def args_to_internal_representation([user, project, count]) do
+    {user, project, String.to_integer(count)}
+  end
 
-    case parse do
-      {[help: true], _, _} -> :help
-      {_, [user, project, count], _} -> {user, project, String.to_integer(count)}
-      {_, [user, project], _} -> {user, project, @default_count}
-      _ -> :help
-    end
+  def args_to_internal_representation([user, project]) do
+    {user, project, @default_count}
+  end
+
+  def args_to_internal_representation(_) do # bad arg or --help
+    :help
   end
 end

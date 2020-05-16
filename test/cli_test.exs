@@ -7,6 +7,7 @@ defmodule CliTest do
   test ":help returned by option parsing with -h and --help options" do
     assert parse_arg(["-h", "anything"]) == :help
     assert parse_arg(["--help", "anything"]) == :help
+    assert parse_arg(["anything"]) == :help
   end
 
   test "three values returned if three given" do
